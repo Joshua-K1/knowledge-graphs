@@ -1,0 +1,5 @@
+# ignore python virtual env
+.venv
+
+# ignore python env files
+.env
