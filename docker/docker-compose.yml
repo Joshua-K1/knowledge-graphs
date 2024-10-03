@@ -5,11 +5,17 @@ services:
     ports:
       - "7687:7687"
       - "7474:7474"
+    
     volumes:
-      - ./logs:/app/logs
+      - ./data:/data
+      - ./neo4j-plugins:/plugins
+      - ./neo4j-conf:/conf
 
     networks:
       - backend
+
+    environment:
+      - NEO4J_AUTH=neo4j/Password1
 
 
 networks:
