@@ -1,4 +1,5 @@
-import os
+import threading
+from engine.scheduler import ApplicationQueue, create_worker_threads, stop_all_workers, wait_until_workers_complete
 from dotenv import load_dotenv
 from prompts import KnowledgeExtractionPrompt, AddKnowledgePrompt
 from langchain.chains import LLMChain
@@ -11,15 +12,12 @@ load_dotenv()
 KG_TRIPLE_DELIMITER = "<|>"
 
 from langchain_community.graphs import Neo4jGraph
-
-# transformers
 from langchain_experimental.graph_transformers import LLMGraphTransformer
 from langchain_core.documents import Document
-
 from langchain_openai import AzureChatOpenAI
 
-def main():
 
+def main():
     # import raw data
     df_x = import_data()
 
@@ -36,9 +34,36 @@ def main():
     for app in applications:
         apps_akp_list.append(AddKnowledgePrompt(app.name, app.description))
 
-    # print prompts
+    # Application request queue
+    app_q = ApplicationQueue()
+
+    # add application tasks to the queue
     for akp in apps_akp_list:
-        print(akp.prompt)
+        app_q.add_application_task(akp.prompt)
+
+    # create worker threads
+    workers = create_worker_threads(3, app_q)
+
+    # wait until all tasks are done
+    app_q.wait_until_done()
+
+    # stop workers
+    stop_all_workers(workers)
+
+    # wait until all workers are done
+    wait_until_workers_complete(workers)
+
+
+
+
+
+        
+
+
+
+
+
+    
 
 
 

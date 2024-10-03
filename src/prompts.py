@@ -34,9 +34,9 @@ _DEFAULT_KNOWLEDGE_TRIPLE_EXTRACTION_TEMPLATE = (
 # Prompt template for adding additional knowledge
 _ADD_KNOWLEDGE_TEMLATE = (
     "Give me some additional information on the application that is mentioned below:\n"
-    "{application}"
+    "{application}\n"
     "\nTo help you understand the context of the application, below is a brief description of the application:\n"
-    "{description}"
+    "{description}\n"
 
 )
 

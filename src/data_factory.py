@@ -10,7 +10,6 @@ def ret_name_desc(frame: pd.DataFrame) -> pd.DataFrame:
     return data
 
 
-
 class Application():
     def __init__(self, name, description):
         self.name = name
