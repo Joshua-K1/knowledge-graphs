@@ -51,10 +51,8 @@ class KnowledgeExtractionPrompt:
 
 # Add knowledge to existing data
 class AddKnowledgePrompt:
-    def __init__(self, app_name, app_desc):
-        prompt = PromptTemplate(
+    def __init__(self):
+        self.prompt = PromptTemplate(
             input_variables=["application", "description"],
             template=_ADD_KNOWLEDGE_TEMLATE,
         )
-
-        self.prompt = prompt.format(application=app_name, description=app_desc)
