@@ -3,3 +3,6 @@ langchain-community
 langchain-openai
 langchain-experimental
 neo4j
+pandas
+openpyxl
+nicegui
