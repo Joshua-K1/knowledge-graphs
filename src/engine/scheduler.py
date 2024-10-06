@@ -2,7 +2,9 @@ import queue
 import threading
 import time
 
-import engine.ai_req as ai_req
+import engine.ai as ai
+
+from prompts import KnowledgeExtractionPrompt, AddKnowledgePrompt
 
 
 class ApplicationQueue:
@@ -23,9 +25,8 @@ class ApplicationQueue:
 
 
 class Task:
-    def __init__(self, task_id: int, prompt: str, app):
+    def __init__(self, task_id: int, app):
         self.task_id = task_id
-        self.prompt = prompt
         self.app = app
 
 
@@ -40,6 +41,11 @@ class Worker(threading.Thread):
 
     def run(self):
         print(f"Worker {self.worker_id} started")
+        
+        # Create OpenAI instance 
+        openai = ai.openai()
+
+        chain = openai.get_chain(AddKnowledgePrompt())
 
         while not self._stop_event.is_set():
             try:
@@ -50,10 +56,15 @@ class Worker(threading.Thread):
                     self.task_queue.task_done()
                     break
                 try:
-                    print(f"Worker {self.worker_id} processing task: {task.task_id}")
+                    print(f"Worker {self.worker_id} processing application: {task.app.name}")
+                    print(f"Worker {self.worker_id} processing description: {task.app.description}")
+                    
+                    enhanced_description = chain.invoke_req(chain, task.app.name, task.app.description)
+
+
                     time.sleep(2)
                 finally:
-                    print(f"Worker {self.worker_id} finished task: {task}")
+                    print(f"Worker {self.worker_id} finished task: {task.task_id}")
                     self.task_queue.task_done()
             except queue.Empty:
                 continue

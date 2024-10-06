@@ -14,5 +14,9 @@ class Application():
     def __init__(self, name, description):
         self.name = name
         self.description = description
+        self.enhanced_description = None
+
+    def set_enhanced_description(self, enhanced_description):
+        self.enhanced_description = enhanced_description
 
         

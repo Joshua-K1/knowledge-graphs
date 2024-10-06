@@ -34,8 +34,8 @@ def main():
     # create type of prompt to send || AddKnowledgePrompt() or KnowledgeExtractionPrompt()
     akp = AddKnowledgePrompt()
 
-    for app in applications:
-        tasks.append(Task(random.randint(0, 100), akp.prompt, app))
+    for i, app in enumerate(applications):
+        tasks.append(Task(i, app))
 
     # Application request queue
     app_q = ApplicationQueue()

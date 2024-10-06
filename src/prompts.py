@@ -56,3 +56,6 @@ class AddKnowledgePrompt:
             input_variables=["application", "description"],
             template=_ADD_KNOWLEDGE_TEMLATE,
         )
+
+    def get_prompt(self, application, description):
+        return self.prompt.format(application=application, description=description)

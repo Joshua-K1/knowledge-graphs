@@ -16,9 +16,6 @@ class openai:
             openai_api_version=os.getenv("OPENAI_API_VER"),
         )
 
-    def get_chain(self, prompt):
+    def get_chain(self, prompt) -> LLMChain:
         return LLMChain(llm=self.llm, prompt=prompt)
-
-    def invoke_req(self, chain, text):
-        return chain.invoke({'text': text}).get('text')
         
