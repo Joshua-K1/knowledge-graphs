@@ -5,4 +5,5 @@ langchain-experimental
 neo4j
 pandas
 openpyxl
-nicegui
+fastapi
+sqlalchemy
