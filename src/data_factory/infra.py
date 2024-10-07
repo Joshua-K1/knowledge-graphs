@@ -41,3 +41,6 @@ class NetworkInformation():
     def __init__(self, network_name: str, network_details: dict):
         self.network_name = network_name
         self.network_details = network_details
+
+
+class NetworkInterfaces():
